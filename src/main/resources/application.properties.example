@@ -1,0 +1,8 @@
+spring.application.name=your_application_name
+spring.datasource.username=your_username
+spring.datasource.password=your_password
+spring.datasource.url=your_datasource_url
+
+# Auto update database structure base on entity
+spring.jpa.generate-ddl=true
+spring.jpa.hibernate.ddl-auto=update
