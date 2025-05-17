@@ -1,9 +1,8 @@
 package OnlineBookStore.bookstore.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -11,23 +10,25 @@ import java.util.List;
 @Entity
 @Data
 @Table(name = "categories")
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer categoryId;
+     Integer categoryId;
 
     @Column(nullable = false)
-    private String name;
+     String name;
 
     @Column
-    private String description;
+     String description;
 
     @Column(updatable = false)                  //createdate cannot update
-    private LocalDate createdAt;
+     LocalDate createdAt;
 
-    private LocalDate updatedAt;
+     LocalDate updatedAt;
 
     @PrePersist
     protected void onCreate() {
@@ -46,5 +47,5 @@ public class Category {
             joinColumns = @JoinColumn(name = "categoryId"),
             inverseJoinColumns = @JoinColumn(name = "bookId")
     )
-    private List<Book> books;
+     List<Book> books;
 }

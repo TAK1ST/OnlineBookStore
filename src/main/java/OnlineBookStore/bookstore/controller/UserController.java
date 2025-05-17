@@ -1,9 +1,16 @@
 package OnlineBookStore.bookstore.controller;
 
+import OnlineBookStore.bookstore.dto.request.ApiResponse;
 import OnlineBookStore.bookstore.dto.request.UserCreationRequest;
 import OnlineBookStore.bookstore.dto.request.UserUpdateRequest;
+import OnlineBookStore.bookstore.dto.response.UserResponse;
 import OnlineBookStore.bookstore.entity.User;
 import OnlineBookStore.bookstore.service.UserService;
+import jakarta.validation.Valid;
+
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,14 +18,17 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/identity/users")
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
 public class UserController {
-    @Autowired
-    private UserService userService;
+    UserService userService;
 
     @PostMapping
-    User createUser(@RequestBody UserCreationRequest request)
+    ApiResponse<User> createUser(@RequestBody @Valid UserCreationRequest request)
     {
-        return userService.createUser(request);
+        ApiResponse<User> response = new ApiResponse<>();
+        response.setResult(userService.createUser(request));
+        return response;
     }
 
     @GetMapping
@@ -28,13 +38,13 @@ public class UserController {
     }
 
     @GetMapping("/{userId}")
-    User getUserById(@PathVariable String userId)
+    UserResponse getUserById(@PathVariable String userId)
     {
         return userService.getUserById(userId);
     }
 
     @PutMapping("/{userId}")
-    User updateUserById(@PathVariable String userId, @RequestBody UserUpdateRequest request)
+    UserResponse  updateUserById(@PathVariable String userId, @RequestBody UserUpdateRequest request)
     {
         return userService.updateUserById(userId, request);
     }

@@ -1,18 +1,18 @@
 package OnlineBookStore.bookstore.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDate;
 
 @Entity
 @Data
 @Table(name = "reviews")
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

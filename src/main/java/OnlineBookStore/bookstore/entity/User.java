@@ -2,9 +2,8 @@ package OnlineBookStore.bookstore.entity;
 
 import OnlineBookStore.bookstore.constant.UserRoleEnum;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDate;
 
@@ -13,28 +12,29 @@ import java.time.LocalDate;
 @Table(name = "users")
 @NoArgsConstructor
 @AllArgsConstructor
-
+@Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private String userId;
+     String userId;
 
     @Column(nullable = false, unique = true)
-    private String email;
+     String email;
 
     @Column(nullable = false, unique = true)
-    private String username;
+     String username;
 
     @Column(nullable = false)
-    private String password;
+     String password;
 
     @Column(nullable = false, length = 100)
-    private String firstName;
+     String firstName;
 
     @Column(nullable = false, length = 100)
-    private String lastName;
+     String lastName;
 
-    private LocalDate dob;
+     LocalDate dob;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false,columnDefinition = "ENUM('GUEST', 'USER', 'ADMIN') DEFAULT 'USER'")
