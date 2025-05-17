@@ -1,46 +1,43 @@
-package OnlineBookStore.bookstore.Entities;
+package OnlineBookStore.bookstore.entity;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.experimental.FieldDefaults;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
-@FieldDefaults(level = AccessLevel.PRIVATE)
 @Data
+@Table(name = "categories")
 @NoArgsConstructor
 @AllArgsConstructor
 public class Category {
     @Id
-    Integer categoryId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer categoryId;
 
     @Column(nullable = false)
-    String name;
+    private String name;
 
     @Column
-    String description;
+    private String description;
 
-    @Column(updatable = false)                  //help createdate cannot update
-    @Temporal(TemporalType.TIMESTAMP)
-    Date createdAt;
+    @Column(updatable = false)                  //createdate cannot update
+    private LocalDate createdAt;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    Date updatedAt;
+    private LocalDate updatedAt;
 
     @PrePersist
     protected void onCreate() {
-        createdAt = new Date();
+        createdAt = LocalDate.now();
         updatedAt = createdAt;
     }
 
     @PreUpdate
     protected void onUpdate() {
-        updatedAt = new Date();
+        updatedAt = LocalDate.now();
     }
 
     @ManyToMany
